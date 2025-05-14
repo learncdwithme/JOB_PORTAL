@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-bottom: 80px;
+    /* background: #f8f9fa; */
+    background: #f7f7f7;
+  }
+  
+  .pa{
+    display: flex;
+    /* background: #bdd6f0; */
+    border-radius: 10px;
+    justify-content: space-evenly;
+    gap: 12px; 
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+
+  .child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    border-radius: 8px;
+    /* box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); */
+  }
+
+  .child img {
+    width: 30px;
+    margin: 5px;
+    object-fit: cover;
+  }
+
+  .child p {
+    text-align: center;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .container {
+    padding: 16px;
+    max-width: 90%;
+    margin: auto;
+    /* background: #e72222; */
+    /* box-shadow: 0 0 10px rgba(0,0,0,0.05); */
+  }
+  
+  .job-card {
+    background: white;
+    padding: 16px;
+    border-radius: 10px;
+    margin: 10px;
+    /* border-bottom: 1px solid #ddd; */
+  }
+  
+  .si-card {
+    background: rgba(255, 255, 255, 0);
+    padding: 16px;
+    border-radius: 10px;
+    margin: 10px;
+    /* border-bottom: 1px solid #ddd; */
+  }
+  
+  .si-card h1 {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
+
+  .job-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  .job-card-sm{
+    background: white;  
+    min-width: 240px;
+    width: 20%;
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+
+  .job-card h1 {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
+
+
+  .job-card h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
+  
+  .job-meta {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .skills {
+    margin: 10px 0;
+  }
+  
+  .skills span {
+    background: #007bff00;
+    border-radius: 50px;
+    padding: 4px 12px;
+    margin: 4px;
+    color: black;
+    border-width: 2px;
+    border-style: solid;  
+    border-color: #bdd6f0;
+    display: inline-block;
+  }
+  
+  .section {
+    margin-top: 24px;
+  }
+  
+  .section h2 {
+    font-size: 18px;
+    border-left: 4px solid #007bff;
+    padding-left: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .key-details p {
+    margin: 4px 0;
+  }
+  
+  .related-jobs .card {
+    background: #f1f1f1;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+  }
+  
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  

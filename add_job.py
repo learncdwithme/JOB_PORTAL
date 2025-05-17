@@ -85,12 +85,12 @@ qualification = prompt("Qualification")
 employment = prompt("Employment Type")
 
 apply_url = prompt("Apply URL")
-posted_by = prompt("Posted By (Company Name)", company+" - Job Search")
+posted_by = prompt("Posted By (Company Name)", company)
 
 # Create job ID using Unix timestamp
-timestamp = str(int(datetime.now().timestamp()))
-jobid = timestamp
-dt_object = datetime.fromtimestamp(jobid)
+timestamp = int(datetime.now().timestamp())
+jobid = str(timestamp)
+dt_object = datetime.fromtimestamp(timestamp)
 ftdate = dt_object.strftime('%d-%b-%Y')
 job_path = f"jobs/{category_slug}/{jobid}/"
 
@@ -167,11 +167,23 @@ with open(html_path, "w", encoding="utf-8") as f:
   <meta property="og:type" content="website">
   <meta property="og:url" content="{job_path}">
   <meta property="og:image" content="/assets/cp.svg">
+  <link rel="icon" type="image/png" href="/assets/cp.svg">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 
 <body>
   <div class="container">
+  
+    <div class="top-nav-bar">
+      <button class="back-button" id="backBtn" title="Go Back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#333" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <div class="nav-title">Job Detail</div>
+    </div>
+    
     <div>
       <section id="jobcard">
         <div class="job-card">
@@ -193,29 +205,47 @@ with open(html_path, "w", encoding="utf-8") as f:
         
         {f'<section id="jd" class="job-card"><h2>Job Description</h2><p>{desc_formatted}</p></section>' if desc_formatted.strip() else ''}
 
-        {f"""
-        <section id="kd" class="job-card key-details">
-          <h2>Key Details</h2>
-          {f"<p><strong>Function:</strong> {job_function}</p>" if job_function else ""}
-          {f"<p><strong>Industry:</strong> {industry}</p>" if industry else ""}
-          {f"<p><strong>Specialization:</strong> {specialization}</p>" if specialization else ""}
-          {f"<p><strong>Qualification:</strong> {qualification}</p>" if qualification else ""}
-          {f"<p><strong>Employment Type:</strong> {employment}</p>" if employment else ""}
-        </section>""" if any([job_function, industry, specialization, qualification, employment]) else ''}
+       {f"""
+      <section id="kd" class="job-card key-details">
+        <h2>Key Details</h2>
+        <div class="details-grid">
+          {f"<div><span class='label'>Function</span><span class='value'>{job_function}</span></div>" if job_function else ""}
+          {f"<div><span class='label'>Industry</span><span class='value'>{industry}</span></div>" if industry else ""}
+          {f"<div><span class='label'>Specialization</span><span class='value'>{specialization}</span></div>" if specialization else ""}
+          {f"<div><span class='label'>Qualification</span><span class='value'>{qualification}</span></div>" if qualification else ""}
+          {f"<div><span class='label'>Employment Type</span><span class='value'>{employment}</span></div>" if employment else ""}
+        </div>
+      </section>
+      """ if any([job_function, industry, specialization, qualification, employment]) else ''}
 
         {f'<section id="ks" class="job-card"><h3>Key Skills</h3><div class="skills">{skills_html}</div></section>' if skills_html else ''}
+        
+      {f"""
+      <section id=" pby" class="job-card key-details">
+        <h2>Job Posted</h2>
+        <div class="details-grid">
+          {f"<div><span class='label'>Company</span><span class='value'>{company}</span></div>" if company else ""}
+        </div>
+      </section>
+      """ if company else ''}
+
+        
 
         {f"""
         <section class="si-card">
           <h1>Similar Jobs</h1>
           <div class='job-list'>
           </div>
-        </section>""" if related_jobs else ''}
+        </section>"""}
       </section>
     </div>
+    
+    <div class="sticky-apply-bar" id="stickyApply">
+      <button class="share-btn" onclick="" title="Share this job">🔗</button>
+      <a href="{apply_url}" target="_blank" class="apply-btn">Apply</a>
+    </div>
+    
   </div>
-
-  <footer onclick="window.location.href='{apply_url}'">Apply</footer>
   <script src="/assets/si.js"></script>
 </body>
 </html>

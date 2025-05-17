@@ -5,6 +5,41 @@ body {
     /* background: #f8f9fa; */
     background: #f7f7f7;
   }
+
+  .top-nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 9vh;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 0 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.back-button {
+  position: absolute;
+  left: 16px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
   
   .pa{
     display: flex;
@@ -39,9 +74,9 @@ body {
   }
 
   .container {
-    padding: 16px;
+    padding: 16px;  
     max-width: 90%;
-    margin: auto;
+    margin: 9vh auto auto auto;
     /* background: #e72222; */
     /* box-shadow: 0 0 10px rgba(0,0,0,0.05); */
   }
@@ -150,3 +185,80 @@ body {
     z-index: 10;
   }
   
+.details-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  row-gap: 8px;
+  column-gap: 16px;
+  margin-top: 10px;
+}
+
+.details-grid div {
+  display: contents;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.value {
+  color: #333;
+  max-width: 30ch; /* limit to approx 25 characters */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+.sticky-apply-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  gap: 10px;
+}
+
+.sticky-apply-bar.hidden {
+  transform: translateY(100%);
+}
+
+/* Share Button */
+.share-btn {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  color: #555;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Apply Button */
+.apply-btn {
+  flex:auto;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 12px;
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 8px; 
+  text-align: center;
+}
+
+
+

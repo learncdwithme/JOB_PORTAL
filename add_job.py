@@ -261,7 +261,7 @@ with open(html_path, "w", encoding="utf-8") as f:
   <meta property="og:image" content="/assets/cp.svg">
   <link rel="stylesheet" href="/assets/style.css">
 
-  {ld}
+  {json_ld}
 
 </head>
 

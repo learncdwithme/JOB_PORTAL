@@ -213,9 +213,8 @@ body {
 
 
 .sticky-apply-bar {
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  left: 0;
   width: 100%;
   display: flex;
   align-items: center;
@@ -260,5 +259,14 @@ body {
   text-align: center;
 }
 
+  .ft {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
+  footer{
+    position: static;
+  
+  }
 

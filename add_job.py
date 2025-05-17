@@ -51,7 +51,7 @@ def prompt(label, default=None):
 
 role = prompt("Role")
 company = prompt("Company name")
-payscale = prompt("Payscale", "Undisclosed")
+payscale = prompt("Payscale", "As per industry Standards")
 location = prompt("Location")
 # location = prompt("Location","Undisclosed")
 experience = prompt("Experience", "Undisclosed")
@@ -213,7 +213,7 @@ json_ld = """
     "address": {{
       "@type": "PostalAddress",
       "addressLocality": "{location}",
-      "addressCountry": "IN"
+      "addressCountry": "IN,USA,KR,RU,AU,NH,Remote"
     }}
   }},
   "baseSalary": {{
@@ -254,7 +254,7 @@ with open(html_path, "w", encoding="utf-8") as f:
   <meta name="keywords" content="{role}, {role_keywords}, {company}, {location}, {industry_keywords}, hiring, careers, jobs in {location}, {role} jobs, IT jobs, software careers, remote jobs, tech jobs">
 
   <meta property="og:title" content="{role}{company_part}{location_part} | Apply Now">
-  <meta property="og:description" content="content="Looking for a {role} job{company_part}{location_part}? We are hiring skilled professionals with {experience_part} experience. {position_part}">
+  <meta property="og:description" content="Looking for a {role} job{company_part}{location_part}? We are hiring skilled professionals with {experience_part} experience. {position_part}">
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="{job_path}">

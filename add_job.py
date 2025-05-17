@@ -92,7 +92,7 @@ timestamp = int(datetime.now().timestamp())
 jobid = str(timestamp)
 dt_object = datetime.fromtimestamp(timestamp)
 ftdate = dt_object.strftime('%d-%b-%Y')
-job_path = f"jobs/{category_slug}/{jobid}/"
+job_path = f"/jobs/{category_slug}/{jobid}/"
 
 # Create job directory
 os.makedirs(os.path.join(BASE_DIR, category_slug, jobid), exist_ok=True)
@@ -141,6 +141,32 @@ html_path = os.path.join(BASE_DIR, category_slug, jobid, "index.html")
 skills_html = ''.join([f"<span>{s.strip()}</span>" for s in (skills or "").split(",") if s.strip()])
 related_jobs = [j for j in jobs if j["category"] == category_slug and j["jobid"] != jobid][:4]
 
+
+def get_keywords_for_role(role: str) -> str:
+    role_keywords = {
+        "Java Developer": "Java jobs, backend developer, Java Spring, software development, Java careers",
+        "PHP Developer": "PHP jobs, web development, Laravel, backend programming, full stack PHP",
+        "Android Developer": "Android jobs, mobile developer, Kotlin, Android Studio, mobile app development",
+        "Content Writer": "content writing, SEO writer, blog writer, freelance writer, digital content",
+        "Business Development Manager": "sales strategy, BDM, client acquisition, corporate sales, business growth",
+        "Software Engineer": "software development, full stack developer, coding jobs, tech engineer, IT jobs",
+        "Graphic Designer": "UI/UX design, Adobe Photoshop, visual design, creative designer, branding",
+        "Business Analyst": "data analysis, business strategy, stakeholder analysis, BA jobs, project planning",
+        "Data Engineer": "data pipeline, ETL jobs, big data, data warehousing, cloud data engineering",
+        "Project Manager": "project delivery, PMP certified, agile project management, PM jobs, team leadership",
+        "Sales Manager": "sales leader, B2B sales, territory manager, sales jobs, team sales manager",
+        "Sales Executive": "inside sales, outbound sales, telecalling jobs, entry-level sales, field sales",
+        "HR Manager": "HRBP, talent acquisition, human resources, employee engagement, HR strategy",
+        "Data Scientist": "machine learning, AI jobs, data modeling, Python for data science, data analytics",
+        "Civil Engineer": "construction jobs, site engineer, structural design, AutoCAD, civil projects",
+        "Senior Consultant": "consulting services, management consultant, client advisory, senior strategy consultant"
+    }
+
+    # Provide default fallback if role is not listed
+    return role_keywords.get(role, "technology jobs, career opportunities, hiring now, software jobs")
+
+
+
 # Format bold and bullet points in description
 import re
 desc_formatted = re.sub(r"\$\%(.*?)\%\$", r"<strong>\1</strong>", description)
@@ -153,22 +179,91 @@ about_formatted = re.sub(r"\*(.*?)\*", r"<ul><li>\1</li></ul>", about_formatted)
 about_formatted = about_formatted.replace("\\n", "<br>")
 about_formatted = about_formatted.replace("\n", "<br>")
 
+# Python-style pseudocode for clarity
+company_part = f" at {company}" if company else ""
+location_part = f" in {location}" if location else " (Remote or Flexible Location)"
+experience_part = f"Experience: {experience}" if experience else ""
+payscale_part = f"{payscale} | " if payscale else ""
+position_part = f"Number of positions: {positions}" if positions else "Multiple openings available"
+role_keywords = f"{role}, {role.lower()} jobs, {role.lower()} openings"
+industry_keywords = get_keywords_for_role(role)
+
+json_ld = """
+<script type="application/ld+json">
+{{
+  "@context": "http://schema.org",
+  "@type": "JobPosting",
+  "title": "{role}",
+  "description": "Hiring {role}{company_part}{location_part}. {experience_part} experience. {position_part}.",
+  "identifier": {{
+    "@type": "PropertyValue",
+    "name": "{company}",
+    "value": "{job_id}"
+  }},
+  "datePosted": "{date_posted}",
+  "validThrough": "{expiry_date}",
+  "employmentType": "Full-time",
+  "hiringOrganization": {{
+    "@type": "Organization",
+    "name": "{company}",
+    "sameAs": "{company_website}"
+  }},
+  "jobLocation": {{
+    "@type": "Place",
+    "address": {{
+      "@type": "PostalAddress",
+      "addressLocality": "{location}",
+      "addressCountry": "IN"
+    }}
+  }},
+  "baseSalary": {{
+    "@type": "MonetaryAmount",
+    "currency": "INR",
+    "value": {{
+      "@type": "QuantitativeValue",
+      "value": "{salary_value}",
+      "unitText": "YEAR"
+    }}
+  }}
+}}
+</script>
+""".format(
+    role=role,
+    company_part=company_part,
+    location_part=location_part,
+    experience_part=experience_part,
+    position_part=position_part,
+    company=company,
+    job_id=jobid,
+    date_posted=timestamp,
+    expiry_date=timestamp,
+    company_website=apply_url,
+    location=location,
+    salary_value=payscale
+)
+
+
 with open(html_path, "w", encoding="utf-8") as f:
     f.write(f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{role} at {company}</title>
-  
-  <meta name="description" content="{role} in {location if location else ""} at {company} with {experience} experience is required - Number of position are {positions}">
-  <meta property="og:title" content="{role} | {company}">
-  <meta property="og:description" content="{payscale} | {experience} | {location}">
+  <title>{role}{company_part}{location_part} | Apply Now</title>
+  <meta name="description" content="Looking for a {role} job{company_part}{location_part}? We are hiring skilled professionals with {experience_part} experience. {position_part}">
+  <meta name="keywords" content="{role}, {role_keywords}, {company}, {location}, {industry_keywords}, hiring, careers, jobs in {location}, {role} jobs, IT jobs, software careers, remote jobs, tech jobs">
+
+  <meta property="og:title" content="{role}{company_part}{location_part} | Apply Now">
+  <meta property="og:description" content="content="Looking for a {role} job{company_part}{location_part}? We are hiring skilled professionals with {experience_part} experience. {position_part}">
+
   <meta property="og:type" content="website">
   <meta property="og:url" content="{job_path}">
   <meta property="og:image" content="/assets/cp.svg">
   <link rel="icon" type="image/png" href="/assets/cp.svg">
   <link rel="stylesheet" href="/assets/style.css">
+
+  {json_ld}
+
 </head>
 
 <body>
